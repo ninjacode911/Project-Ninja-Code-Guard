@@ -67,7 +67,11 @@ def _generate_jwt() -> str:
     if _private_key is None:
         if settings.github_app_private_key:
             # Cloud deployment: key content passed directly via env var
-            _private_key = settings.github_app_private_key
+            # HF Spaces may strip newlines — restore them if needed
+            key = settings.github_app_private_key
+            if "\\n" in key:
+                key = key.replace("\\n", "\n")
+            _private_key = key
         else:
             # Local development: read from .pem file
             project_root = Path(__file__).resolve().parent.parent.parent
