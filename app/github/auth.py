@@ -62,12 +62,17 @@ def _generate_jwt() -> str:
     """
     now = int(time.time())
 
-    # Cache the private key in memory after first read (avoid repeated disk I/O)
+    # Cache the private key in memory after first read
     global _private_key
     if _private_key is None:
-        project_root = Path(__file__).resolve().parent.parent.parent
-        private_key_path = project_root / settings.github_app_private_key_path
-        _private_key = private_key_path.read_text()
+        if settings.github_app_private_key:
+            # Cloud deployment: key content passed directly via env var
+            _private_key = settings.github_app_private_key
+        else:
+            # Local development: read from .pem file
+            project_root = Path(__file__).resolve().parent.parent.parent
+            private_key_path = project_root / settings.github_app_private_key_path
+            _private_key = private_key_path.read_text()
 
     payload = {
         # iat = "issued at" — when this token was created

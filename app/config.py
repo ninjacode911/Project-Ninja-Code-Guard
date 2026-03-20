@@ -13,6 +13,7 @@ class Settings(BaseSettings):
     # GitHub App
     github_app_id: str = ""
     github_app_private_key_path: str = "./keys/app.pem"
+    github_app_private_key: str = ""  # PEM content directly (for cloud deployment)
     github_webhook_secret: str = ""
 
     # Database
