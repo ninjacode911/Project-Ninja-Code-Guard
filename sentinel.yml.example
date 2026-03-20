@@ -1,0 +1,29 @@
+# Sentinel AI — Per-repo configuration
+# Place this file as sentinel.yml in your repository root
+
+# Enable/disable specific agents
+agents:
+  security: true
+  performance: true
+  style: true
+
+# Severity threshold — only post findings at or above this level
+# Options: critical, high, medium, low
+min_severity: low
+
+# Confidence threshold — findings below this are shown as 'Suggestions'
+min_confidence: 0.6
+
+# Files/directories to exclude from analysis
+exclude:
+  - "vendor/"
+  - "node_modules/"
+  - "*.min.js"
+  - "*.generated.*"
+
+# Language-specific overrides (optional)
+# languages:
+#   python:
+#     style_guide: pep8
+#   javascript:
+#     style_guide: airbnb

@@ -1,0 +1,14 @@
+name: Pre-warm Render
+
+on:
+  schedule:
+    # Ping every 10 minutes during working hours (UTC)
+    - cron: "*/10 6-20 * * 1-5"
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping health endpoint
+        run: |
+          curl -sf "${{ secrets.RENDER_HEALTH_URL }}/health" || echo "Service cold — will wake on next request"

@@ -1,0 +1,27 @@
+[project]
+name = "ninja-code-guard"
+version = "0.1.0"
+description = "Ninja Code Guard — Multi-agent PR review system with Security, Performance, and Style agents"
+requires-python = ">=3.11"
+authors = [
+    { name = "Navnit Amrutharaj", email = "navnita004@gmail.com" }
+]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "N", "UP", "B", "A", "SIM"]
+ignore = ["E501"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+addopts = "-v --tb=short"
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+warn_return_any = true
+warn_unused_configs = true
