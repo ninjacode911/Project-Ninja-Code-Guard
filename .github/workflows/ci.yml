@@ -9,6 +9,11 @@ on:
 jobs:
   lint-and-test:
     runs-on: ubuntu-latest
+    env:
+      # Dummy keys for CI — tests never call real APIs, but ChatGroq
+      # constructor requires the env var to exist
+      GROQ_API_KEY: "gsk_dummy_ci_key_not_real"
+      ENVIRONMENT: "testing"
     steps:
       - uses: actions/checkout@v4
 
