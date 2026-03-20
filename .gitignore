@@ -59,10 +59,11 @@ dashboard/out/
 # Claude Code
 .claude/
 
-# Screenshots
+# Screenshots (local dev only — assets/ is committed to GitHub for README)
 Pictures/
-assets/
-*.png
+hero-section.png
+homepage-full.png
+homepage-viewport.png
 
 # Misc
 *.log
