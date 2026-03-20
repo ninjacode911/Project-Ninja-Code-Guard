@@ -1,0 +1,33 @@
+# Production dependencies (slim — excludes heavy ML packages for free tier hosting)
+# sentence-transformers + torch are ~4GB, exceeding Railway/Render free tier image limits
+# RAG context is disabled in production — agents work fine without it
+
+# === Core Framework ===
+fastapi>=0.115.0
+uvicorn[standard]>=0.32.0
+pydantic>=2.10.0
+pydantic-settings>=2.6.0
+
+# === LLM & Agents ===
+langchain>=0.3.0
+langchain-groq>=0.2.0
+
+# === GitHub Integration ===
+PyJWT[crypto]>=2.9.0
+httpx>=0.28.0
+
+# === Database ===
+asyncpg>=0.30.0
+
+# === Redis ===
+redis>=5.2.0
+
+# === Static Analysis Tools ===
+bandit>=1.8.0
+detect-secrets>=1.5.0
+radon>=6.0.0
+ruff>=0.8.0
+
+# === Utilities ===
+python-dotenv>=1.0.0
+structlog>=24.4.0
