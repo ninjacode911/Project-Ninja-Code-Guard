@@ -1,3 +1,12 @@
+---
+title: Ninja Code Guard
+emoji: 🛡️
+colorFrom: purple
+colorTo: blue
+sdk: docker
+app_port: 7860
+---
+
 # Ninja Code Guard
 
 **Multi-agent code review system that reviews GitHub pull requests the way a senior engineering team would.**
@@ -6,7 +15,7 @@ Three specialized AI agents — Security, Performance, and Style — analyze you
 
 ## Screenshots
 
-Screenshots available in the [GitHub repository wiki](https://github.com/ninjacode911/Project-Ninja-Code-Guard) — PR review comments, dashboard home, repo detail with health trends, and PR findings table.
+Screenshots available in the [GitHub repository](https://github.com/ninjacode911/Project-Ninja-Code-Guard) — PR review comments, dashboard home, repo detail with health trends, and PR findings table.
 
 ## How It Works
 
@@ -54,7 +63,7 @@ PR opened on GitHub
 |-------|-----------|-----|
 | LLM | Groq (Llama-3.3-70B) | 500+ tokens/sec, free 14.4K req/day |
 | Agents | LangChain + Structured Output | Typed JSON responses, prompt templates |
-| Backend | FastAPI on Render | Async, auto OpenAPI docs, free tier |
+| Backend | FastAPI | Async, auto OpenAPI docs |
 | Vector DB | ChromaDB + sentence-transformers | RAG context, semantic code search |
 | Cache | Upstash Redis | Prevent duplicate reviews |
 | Database | Neon Postgres | Review history, Health Score trends |
@@ -71,29 +80,15 @@ PR opened on GitHub
 ### Setup
 
 ```bash
-# Clone and setup
-git clone https://github.com/ninjacode911/ninja-code-guard
-cd ninja-code-guard
+git clone https://github.com/ninjacode911/Project-Ninja-Code-Guard
+cd Project-Ninja-Code-Guard
 python -m venv .venv && source .venv/bin/activate  # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 
-# Configure
 cp .env.example .env
 # Edit .env with your API keys
 
-# Run
 uvicorn app.main:app --reload --port 8000
-```
-
-### Environment Variables
-
-```env
-GROQ_API_KEY=gsk_...
-GITHUB_APP_ID=123456
-GITHUB_APP_PRIVATE_KEY_PATH=./keys/app.pem
-GITHUB_WEBHOOK_SECRET=...
-DATABASE_URL=postgresql://...
-UPSTASH_REDIS_URL=rediss://...
 ```
 
 ## Architecture
@@ -101,7 +96,7 @@ UPSTASH_REDIS_URL=rediss://...
 **4 Layers:**
 - **GitHub Layer** — Webhooks, PR events, inline comments
 - **Orchestration Layer** — FastAPI, agent dispatch, asyncio.gather
-- **Agent Layer** — 3 domain agents + synthesizer (LangChain ReAct)
+- **Agent Layer** — 3 domain agents + synthesizer (LangChain)
 - **Knowledge Layer** — ChromaDB (RAG), Redis (cache), Postgres (history)
 
 **Key Design Patterns:**
@@ -111,22 +106,10 @@ UPSTASH_REDIS_URL=rediss://...
 - Background Tasks — Return 200 to GitHub immediately, review asynchronously
 - Parallel Execution — asyncio.gather runs 3 agents concurrently
 
-## Test Results
-
-```
-PR #4 on codeguard-test repo:
-  Security:    5 findings  (SQL injection, weak crypto, hardcoded secrets)
-  Performance: 3 findings  (O(n²) loop, blocking I/O, high complexity)
-  Style:       6 findings  (unused imports, magic numbers, bad naming)
-  Total:       14 findings
-  Health Score: 14/100
-  Latency:     ~13 seconds (after model load)
-```
-
 ## Running Tests
 
 ```bash
-pytest tests/unit/ -v
+pytest tests/unit/ -v  # 92 tests
 ```
 
 ## Project Structure
@@ -148,17 +131,21 @@ docs/              # Week-by-week documentation
 
 ## Documentation
 
-Detailed week-by-week documentation available in `docs/`:
+Detailed week-by-week documentation in `docs/`:
 - [Week 1: Foundation & Setup](docs/WEEK1_FOUNDATION_AND_SETUP.md)
 - [Week 2: GitHub Integration](docs/WEEK2_GITHUB_INTEGRATION.md)
 - [Week 3: Security Agent](docs/WEEK3_SECURITY_AGENT.md)
 - [Week 4: Performance Agent](docs/WEEK4_PERFORMANCE_AGENT.md)
 - [Week 5: Style Agent](docs/WEEK5_STYLE_AGENT.md)
 - [Week 6: RAG & Parallel Execution](docs/WEEK6_RAG_AND_PARALLEL.md)
+- [Week 7: Synthesizer](docs/WEEK7_SYNTHESIZER.md)
+- [Week 8: Dashboard](docs/WEEK8_DASHBOARD.md)
+- [Week 9: Polish & Evaluation](docs/WEEK9_POLISH_AND_EVALUATION.md)
+- [Week 10: Deployment & Launch](docs/WEEK10_DEPLOYMENT_AND_LAUNCH.md)
 
 ## License
 
-MIT
+Apache 2.0
 
 ---
 
