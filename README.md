@@ -13,7 +13,7 @@ app_port: 7860
 
 Three specialized AI agents — **Security**, **Performance**, and **Style** — analyze your code in parallel using LLM reasoning + static analysis tools, then a **Synthesizer** merges their findings into a single, prioritized, non-overlapping review posted directly to your PR as inline GitHub comments.
 
-**Live API:** [ninjainpjs-ninja-code-guard.hf.space](https://ninjainpjs-ninja-code-guard.hf.space)
+**Check It Out:** [projectninjacodeguard](https://projectninjacodeguard.vercel.app/)
 
 ---
 
