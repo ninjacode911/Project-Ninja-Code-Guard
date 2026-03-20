@@ -4,6 +4,20 @@
 
 Three specialized AI agents — Security, Performance, and Style — analyze your code in parallel, then a Synthesizer merges their findings into a single, prioritized, non-overlapping review with inline GitHub comments.
 
+## Screenshots
+
+### PR Review — Bot posts inline findings with Health Score
+![PR Review](assets/pr-review.png)
+
+### Dashboard — Repository overview with health metrics
+![Dashboard Home](assets/dashboard-home.png)
+
+### Repo Detail — Health Score trend, agent breakdown, PR history
+![Repo Detail](assets/repo-detail.png)
+
+### PR Detail — Agent breakdown and findings table
+![PR Detail](assets/pr-detail.png)
+
 ## How It Works
 
 ```
