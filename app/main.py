@@ -97,6 +97,12 @@ app.add_middleware(
 )
 
 
+@app.get("/")
+async def root():
+    """Root endpoint — confirms the service is running."""
+    return {"status": "ok", "service": "Ninja Code Guard", "docs": "/health"}
+
+
 @app.get("/health")
 async def health_check():
     """
