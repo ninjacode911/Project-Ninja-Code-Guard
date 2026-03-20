@@ -1,7 +1,4 @@
----
-title: Ninja Code Guard
-sdk: docker
----
+
 
 # Ninja Code Guard
 
