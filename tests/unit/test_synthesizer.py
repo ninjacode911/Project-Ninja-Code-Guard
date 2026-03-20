@@ -10,7 +10,6 @@ These tests verify:
 6. Ranking puts critical findings first
 """
 
-import pytest
 
 from app.agents.synthesizer import (
     deduplicate_findings,
@@ -35,7 +34,7 @@ def _make_finding(agent="security", severity="high", file_path="app.py",
         title=kwargs.get("title", f"Test {category}"),
         description=kwargs.get("description", "Test finding description."),
         suggested_fix=kwargs.get("suggested_fix", ""),
-        cwe_id=kwargs.get("cwe_id", None),
+        cwe_id=kwargs.get("cwe_id"),
         confidence=confidence,
     )
 

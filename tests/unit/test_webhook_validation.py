@@ -27,7 +27,6 @@ from fastapi.testclient import TestClient
 
 from app.github.webhook import validate_webhook_signature
 
-
 # Create a minimal FastAPI app just for testing the webhook dependency
 # This isolates the test from the rest of the application
 test_app = FastAPI()

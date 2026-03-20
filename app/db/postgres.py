@@ -14,7 +14,6 @@ Schema is auto-created on first connection via ensure_tables().
 from __future__ import annotations
 
 import json
-from datetime import datetime, timezone
 from uuid import uuid4
 
 import structlog

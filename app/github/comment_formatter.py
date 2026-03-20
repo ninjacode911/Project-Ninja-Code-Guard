@@ -131,8 +131,8 @@ def format_summary_comment(review: SynthesizedReview) -> str:
         "",
         "### Findings Summary",
         "",
-        f"| Severity | Count |",
-        f"|----------|-------|",
+        "| Severity | Count |",
+        "|----------|-------|",
         f"| \U0001f6a8 Critical | {review.critical_count} |",
         f"| \U0001f7e0 High | {review.high_count} |",
         f"| \U0001f7e1 Medium | {review.medium_count} |",
@@ -162,7 +162,7 @@ def format_summary_comment(review: SynthesizedReview) -> str:
     if review.findings:
         lines.append("### Detailed Findings")
         lines.append("")
-        for i, finding in enumerate(review.findings, 1):
+        for _i, finding in enumerate(review.findings, 1):
             severity_emoji = SEVERITY_EMOJI.get(finding.severity, "")
             agent_emoji = AGENT_EMOJI.get(finding.agent, "")
             lines.append(

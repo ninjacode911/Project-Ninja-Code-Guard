@@ -16,9 +16,8 @@ from unittest.mock import patch
 import pytest
 
 from app.context.embedder import chunk_code
-from app.context.indexer import index_repo_files, _collection_name
+from app.context.indexer import _collection_name, index_repo_files
 from app.context.retriever import retrieve_context
-
 
 # ─── Code Chunking Tests ─────────────────────────────────────────────────
 

@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 
-from typing import Optional
-
 from pydantic import BaseModel
 
 
@@ -30,9 +28,9 @@ class PullRequest(BaseModel):
     state: str
     head: PullRequestHead
     draft: bool = False
-    changed_files: Optional[int] = None
-    additions: Optional[int] = None
-    deletions: Optional[int] = None
+    changed_files: int | None = None
+    additions: int | None = None
+    deletions: int | None = None
 
 
 class PullRequestEvent(BaseModel):
@@ -52,4 +50,4 @@ class Installation(BaseModel):
 class PullRequestEventWithInstallation(PullRequestEvent):
     """Pull request event with GitHub App installation context."""
 
-    installation: Optional[Installation] = None
+    installation: Installation | None = None

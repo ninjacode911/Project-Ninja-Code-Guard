@@ -85,6 +85,7 @@ async def retrieve_context(
             results["documents"][0],
             results["metadatas"][0],
             results["distances"][0],
+            strict=False,
         ):
             filepath = metadata.get("filepath", "unknown")
             start = metadata.get("start_line", "?")

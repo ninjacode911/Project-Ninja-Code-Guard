@@ -23,7 +23,6 @@ from app.agents.performance_agent import PerformanceAgent
 from app.github.client import PRData
 from app.tools.radon_tool import run_radon
 
-
 # ─── Fixtures ──────────────────────────────────────────────────────────────
 
 
@@ -120,13 +119,13 @@ class TestPerformanceAgent:
         """LLM failure should return empty list, not crash."""
         mock_chain = AsyncMock(side_effect=Exception("Groq rate limit"))
 
-        with patch("app.agents.base_agent.ChatGroq") as MockChatGroq:
+        with patch("app.agents.base_agent.ChatGroq") as mock_chat_groq:
             mock_llm_instance = MagicMock()
             mock_llm_instance.with_structured_output.return_value = MagicMock(
                 __ror__=MagicMock(return_value=mock_chain),
                 __or__=MagicMock(return_value=mock_chain),
             )
-            MockChatGroq.return_value = mock_llm_instance
+            mock_chat_groq.return_value = mock_llm_instance
 
             agent = PerformanceAgent()
             with patch.object(agent, "run_static_analysis", return_value=""):

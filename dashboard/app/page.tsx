@@ -261,8 +261,8 @@ export default function HomePage() {
 
           <StaggerContainer className="grid grid-cols-1 sm:grid-cols-3 gap-5">
             {AGENTS.map((agent) => (
-              <StaggerItem key={agent.title}>
-                <HoverCard>
+              <StaggerItem key={agent.title} className="h-full">
+                <HoverCard className="h-full">
                   <div
                     className={`glass rounded-2xl p-6 border ${agent.border} transition-all duration-300 h-full`}
                   >

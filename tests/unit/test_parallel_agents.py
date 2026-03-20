@@ -25,7 +25,6 @@ from app.agents.performance_agent import PerformanceAgent
 from app.agents.security_agent import SecurityAgent
 from app.agents.style_agent import StyleAgent
 
-
 # ─── Agent Identity Tests ─────────────────────────────────────────────────
 
 
@@ -41,8 +40,8 @@ class TestAgentIdentities:
 
     def test_all_agents_load_prompts(self):
         """Each agent should load its system prompt without errors."""
-        for AgentClass in [SecurityAgent, PerformanceAgent, StyleAgent]:
-            agent = AgentClass()
+        for agent_class in [SecurityAgent, PerformanceAgent, StyleAgent]:
+            agent = agent_class()
             prompt = agent.system_prompt
             assert len(prompt) > 100, f"{agent.agent_name} prompt is too short"
 

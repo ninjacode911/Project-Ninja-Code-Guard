@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Literal, Optional
+from typing import Literal
 from uuid import UUID, uuid4
 
 from pydantic import BaseModel, Field
@@ -20,7 +20,7 @@ class Finding(BaseModel):
     title: str
     description: str
     suggested_fix: str = ""
-    cwe_id: Optional[str] = None
+    cwe_id: str | None = None
     confidence: float = Field(ge=0.0, le=1.0)
 
 

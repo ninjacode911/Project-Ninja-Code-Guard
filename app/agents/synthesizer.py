@@ -87,7 +87,7 @@ def deduplicate_findings(findings: list[Finding]) -> list[Finding]:
     deduped = []
     duplicates_removed = 0
 
-    for key, group in groups.items():
+    for _key, group in groups.items():
         if len(group) == 1:
             deduped.append(group[0])
             continue

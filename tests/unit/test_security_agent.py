@@ -18,17 +18,16 @@ from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
 
-from app.agents.base_agent import AgentFindings, BaseAgent, FindingOutput
+from app.agents.base_agent import AgentFindings, FindingOutput
 from app.agents.security_agent import SecurityAgent
 from app.github.client import PRData
 from app.github.comment_formatter import (
+    findings_to_review_comments,
     format_inline_comment,
     format_summary_comment,
-    findings_to_review_comments,
 )
 from app.models.findings import Finding, SynthesizedReview
 from app.tools.bandit_tool import run_bandit
-
 
 # ─── Fixtures ──────────────────────────────────────────────────────────────
 
@@ -164,13 +163,13 @@ class TestSecurityAgent:
         # Patch at the class level since ChatGroq is a Pydantic model
         mock_chain = AsyncMock(side_effect=Exception("Groq API timeout"))
 
-        with patch("app.agents.base_agent.ChatGroq") as MockChatGroq:
+        with patch("app.agents.base_agent.ChatGroq") as mock_chat_groq:
             mock_llm_instance = MagicMock()
             mock_llm_instance.with_structured_output.return_value = MagicMock(
                 __ror__=MagicMock(return_value=mock_chain),
                 __or__=MagicMock(return_value=mock_chain),
             )
-            MockChatGroq.return_value = mock_llm_instance
+            mock_chat_groq.return_value = mock_llm_instance
 
             agent = SecurityAgent()
             with patch.object(agent, "run_static_analysis", return_value=""):

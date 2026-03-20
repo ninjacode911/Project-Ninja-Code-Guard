@@ -36,8 +36,8 @@ async def evaluate_single_pr(test_case: dict) -> EvalResult:
     A finding is considered a true positive if it matches an expected
     finding on the same file_path and within 3 lines of the expected line.
     """
-    from app.agents.security_agent import SecurityAgent
     from app.agents.performance_agent import PerformanceAgent
+    from app.agents.security_agent import SecurityAgent
     from app.agents.style_agent import StyleAgent
     from app.agents.synthesizer import synthesize
     from app.github.client import PRData

@@ -22,15 +22,35 @@ import asyncio
 import json
 import traceback
 
+import structlog
 from fastapi import (
-    BackgroundTasks, Depends, FastAPI, Header, HTTPException,
-    Request, Response, Security,
+    BackgroundTasks,
+    Depends,
+    FastAPI,
+    Header,
+    HTTPException,
+    Request,
+    Response,
+    Security,
 )
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import APIKeyHeader
-import structlog
 
+from app.agents.performance_agent import PerformanceAgent
+from app.agents.security_agent import SecurityAgent
+from app.agents.style_agent import StyleAgent
+from app.agents.synthesizer import synthesize
 from app.config import settings
+from app.context.indexer import index_repo_files
+from app.context.retriever import retrieve_context
+from app.db.postgres import save_review
+from app.db.redis_cache import is_already_reviewed, mark_as_reviewed
+from app.github.client import GitHubClient
+from app.github.comment_formatter import (
+    findings_to_review_comments,
+    format_summary_comment,
+)
+from app.github.webhook import validate_webhook_signature
 
 # ── API Key auth for dashboard endpoints ──────────────────────────────────
 _api_key_header = APIKeyHeader(name="X-API-Key", auto_error=False)
@@ -39,26 +59,12 @@ _api_key_header = APIKeyHeader(name="X-API-Key", auto_error=False)
 async def verify_api_key(api_key: str = Security(_api_key_header)):
     """Reject dashboard API requests that don't carry a valid API key."""
     if not settings.dashboard_api_key:
-        return  # No key configured → allow (dev mode)
+        return
     if api_key != settings.dashboard_api_key:
         raise HTTPException(status_code=403, detail="Invalid or missing API key")
 
 
-from app.agents.performance_agent import PerformanceAgent
-from app.agents.security_agent import SecurityAgent
-from app.agents.style_agent import StyleAgent
-from app.agents.synthesizer import synthesize
-from app.context.indexer import index_repo_files
-from app.context.retriever import retrieve_context
-from app.db.postgres import save_review
-from app.db.redis_cache import is_already_reviewed, mark_as_reviewed
-from app.github.client import GitHubClient
-from app.github.comment_formatter import (
-    findings_to_review_comments,
-    format_inline_comment,
-    format_summary_comment,
-)
-from app.github.webhook import validate_webhook_signature
+_verify_api_key = Depends(verify_api_key)
 
 logger = structlog.get_logger()
 
@@ -108,7 +114,7 @@ async def health_check():
 
 
 @app.get("/api/repos/{owner}/{repo}/reviews")
-async def get_reviews(owner: str, repo: str, _=Depends(verify_api_key)):
+async def get_reviews(owner: str, repo: str, _=_verify_api_key):
     """Get recent PR reviews for a repo (used by dashboard)."""
     from app.db.postgres import get_repo_reviews
     repo_full_name = f"{owner}/{repo}"
@@ -117,7 +123,7 @@ async def get_reviews(owner: str, repo: str, _=Depends(verify_api_key)):
 
 
 @app.get("/api/repos/{owner}/{repo}/stats")
-async def get_stats(owner: str, repo: str, _=Depends(verify_api_key)):
+async def get_stats(owner: str, repo: str, _=_verify_api_key):
     """Get aggregate stats for a repo (used by dashboard)."""
     from app.db.postgres import get_repo_reviews
     repo_full_name = f"{owner}/{repo}"
