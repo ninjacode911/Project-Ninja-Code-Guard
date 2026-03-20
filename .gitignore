@@ -59,10 +59,10 @@ dashboard/out/
 # Claude Code
 .claude/
 
-# Screenshots (local only — except assets/ which is committed)
+# Screenshots
 Pictures/
+assets/
 *.png
-!assets/*.png
 
 # Misc
 *.log
